@@ -2,43 +2,83 @@ package game.model.entity;
 
 import game.model.placing.Coordinate;
 
-public class Cell {
+import java.util.HashMap;
+import java.util.List;
+
+public class Cell implements Cloneable {
     private Coordinate coordinate;
-    private String defImage;
-    public Cell(int x,int y,String defaultImage){
+    private static String defImage;
+    private Ocean ocean;
+    private HashMap<Integer, List<Cell>> cellMap;
+    private boolean gotProcessed;
+    static {
+        defImage = "-";
+    }
+    public Cell(Ocean ocean,int x,int y){
+        this.ocean = ocean;
+        this.cellMap = getOcean().getCellTable();
         this.coordinate = new Coordinate(x,y);
-        this.defImage = defaultImage;
+        this.gotProcessed = false;
     }
-    public Cell(int x,int y){
-        this.coordinate = new Coordinate(x,y);
-        this.defImage = "-";
-    }
-    public Cell(Coordinate coordinate,String defaultImage){
+    public Cell(Ocean ocean,Coordinate coordinate){
+        this.ocean = ocean;
+        this.cellMap = getOcean().getCellTable();
         this.coordinate = coordinate;
-        this.defImage = defaultImage;
+        this.gotProcessed = false;
     }
-    public Cell(Coordinate coordinate){
-        this.coordinate = coordinate;
-        this.defImage = "-";
-    }
-    public Cell(){
+    public Cell(Ocean ocean){
+        this.ocean = ocean;
+        this.cellMap = getOcean().getCellTable();
         this.coordinate = new Coordinate();
-        this.defImage = "-";
+        this.gotProcessed = false;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Cell cell = (Cell) super.clone();
+        cell.setCoordinate(new Coordinate(coordinate.getX(),coordinate.getY()));
+        cell.setGotProcessed(gotProcessed);
+        return cell;
+
     }
 
     public Coordinate getCoordinate() {
         return coordinate;
     }
-
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
     }
-
     public String getDefImage() {
-        return defImage;
+        return Cell.defImage;
+    }
+    public void setDefImage(String defImage) {
+        Cell.defImage = defImage;
     }
 
-    public void setDefImage(String defImage) {
-        this.defImage = defImage;
+    public void process() {
+    }
+
+    public Ocean getOcean() {
+        return ocean;
+    }
+
+    public void setOcean(Ocean ocean) {
+        this.ocean = ocean;
+    }
+
+    public HashMap<Integer, List<Cell>> getCellMap() {
+        return cellMap;
+    }
+
+    public void setCellMap(HashMap<Integer, List<Cell>> cellMap) {
+        this.cellMap = cellMap;
+    }
+
+    public boolean isGotProcessed() {
+        return gotProcessed;
+    }
+
+    public void setGotProcessed(boolean gotProcessed) {
+        this.gotProcessed = gotProcessed;
     }
 }

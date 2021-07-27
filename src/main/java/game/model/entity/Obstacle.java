@@ -3,26 +3,55 @@ package game.model.entity;
 import game.model.placing.Coordinate;
 
 public class Obstacle extends Cell {
-    public Obstacle(int x,int y,String defaultImage){
-       super(x,y,defaultImage);
+    private static String defImage;
+    static {
+        defImage = "#";
     }
-    public Obstacle(int x,int y){
-       super(x,y,"#");
+    public Obstacle(Ocean ocean,int x,int y){
+       super(ocean,x,y);
     }
-    public Obstacle(Coordinate coordinate,String defaultImage){
-     super(coordinate,defaultImage);
+    public Obstacle(Ocean ocean,Coordinate coordinate){
+       super(ocean,coordinate);
     }
-    public Obstacle(Coordinate coordinate){
-       super(coordinate,"#");
-    }
-    public Obstacle(){
-       super(0,0,"#");
-    }
-    public String getDefaultImage() {
-        return super.getDefImage();
+    public Obstacle(Ocean ocean){
+       super(ocean);
     }
 
-    public void setDefaultImage(String defaultImage) {
-        super.setDefImage(defaultImage);
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
+
+    public String getDefImage() {
+        return Obstacle.defImage;
+    }
+
+    @Override
+    public Coordinate getCoordinate() {
+        return super.getCoordinate();
+    }
+
+    @Override
+    public void setCoordinate(Coordinate coordinate) {
+        super.setCoordinate(coordinate);
+    }
+    @Override
+    public void setDefImage(String defaultImage) {
+        Obstacle.defImage = defaultImage;
+    }
+    public Ocean getOcean(){
+        return  super.getOcean();
+    }
+    public void setOcean(Ocean ocean){
+        super.setOcean(ocean);
+    }
+    @Override
+    public boolean isGotProcessed(){
+        return super.isGotProcessed();
+    }
+    @Override
+    public void setGotProcessed(boolean isGotProcessed){
+        super.setGotProcessed(isGotProcessed);
+    }
+
 }
